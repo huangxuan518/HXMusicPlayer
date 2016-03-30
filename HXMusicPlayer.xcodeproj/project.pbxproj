@@ -45,6 +45,7 @@
 		303D0B1F1CAB687F00B4EC9A /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 303D0AFB1CAB687F00B4EC9A /* UIView+WebCacheOperation.m */; };
 		303D0B201CAB687F00B4EC9A /* HXMusicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 303D0AFE1CAB687F00B4EC9A /* HXMusicCell.m */; };
 		303D0B241CAB68B700B4EC9A /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 303D0B231CAB68B700B4EC9A /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		304EAE511CAB7FB2005563C8 /* xiaoguo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 304EAE501CAB7FB2005563C8 /* xiaoguo.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +124,7 @@
 		303D0AFE1CAB687F00B4EC9A /* HXMusicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXMusicCell.m; sourceTree = "<group>"; };
 		303D0B221CAB68B700B4EC9A /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
 		303D0B231CAB68B700B4EC9A /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
+		304EAE501CAB7FB2005563C8 /* xiaoguo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = xiaoguo.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 		303D0A961CAB67C200B4EC9A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				304EAE501CAB7FB2005563C8 /* xiaoguo.gif */,
 				303D0AAD1CAB684200B4EC9A /* Assets.xcassets */,
 				303D0AAE1CAB684200B4EC9A /* Info.plist */,
 				303D0A971CAB67C200B4EC9A /* main.m */,
@@ -357,6 +360,7 @@
 				303D0AB01CAB684200B4EC9A /* Info.plist in Resources */,
 				303D0B011CAB687F00B4EC9A /* HXPlayingViewController.xib in Resources */,
 				303D0AAF1CAB684200B4EC9A /* Assets.xcassets in Resources */,
+				304EAE511CAB7FB2005563C8 /* xiaoguo.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +537,7 @@
 				303D0AAC1CAB67C200B4EC9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
