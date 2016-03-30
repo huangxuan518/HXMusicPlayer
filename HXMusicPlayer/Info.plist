@@ -2,6 +2,79 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Root</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>我们结婚吧</string>
+			<key>fileName</key>
+			<string>marry.mp3</string>
+			<key>lrcName</key>
+			<string></string>
+			<key>singer</key>
+			<string>何洁</string>
+			<key>singerIcon</key>
+			<string></string>
+			<key>icon</key>
+			<string>hejie</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>天梯</string>
+			<key>fileName</key>
+			<string>李克勤 - 天梯.mp3</string>
+			<key>lrcName</key>
+			<string></string>
+			<key>singer</key>
+			<string>李克勤</string>
+			<key>singerIcon</key>
+			<string></string>
+			<key>icon</key>
+			<string>likeqin</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>浪费</string>
+			<key>fileName</key>
+			<string>徐佳莹 - 浪费.mp3</string>
+			<key>lrcName</key>
+			<string></string>
+			<key>singer</key>
+			<string>徐佳莹</string>
+			<key>singerIcon</key>
+			<string></string>
+			<key>icon</key>
+			<string>xujiayin</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>丑八怪</string>
+			<key>fileName</key>
+			<string>薛之谦 - 丑八怪.mp3</string>
+			<key>lrcName</key>
+			<string></string>
+			<key>singer</key>
+			<string>薛之谦</string>
+			<key>singerIcon</key>
+			<string></string>
+			<key>icon</key>
+			<string>xuezhiqian</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>演员</string>
+			<key>fileName</key>
+			<string>薛之谦 - 演员.mp3</string>
+			<key>lrcName</key>
+			<string></string>
+			<key>singer</key>
+			<string>薛之谦</string>
+			<key>singerIcon</key>
+			<string></string>
+			<key>icon</key>
+			<string>yanyuan</string>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -22,10 +95,6 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -36,5 +105,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

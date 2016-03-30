@@ -1,12 +1,15 @@
 //
 //  AppDelegate.h
-//  HXMusicPlayer
+//  HXMusicPlayDemo
 //
-//  Created by 黄轩 on 16/3/30.
+//  Created by 黄轩 on 16/3/15.
 //  Copyright © 2016年 黄轩 blog.libuqing.com. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
+#define CGMMainScreenWidth            ([[UIScreen mainScreen] bounds].size.width)
+#define CGMMainScreenHeight           ([[UIScreen mainScreen] bounds].size.height)
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

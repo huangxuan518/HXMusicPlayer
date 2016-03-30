@@ -1,12 +1,13 @@
 //
 //  AppDelegate.m
-//  HXMusicPlayer
+//  HXMusicPlayDemo
 //
-//  Created by 黄轩 on 16/3/30.
+//  Created by 黄轩 on 16/3/15.
 //  Copyright © 2016年 黄轩 blog.libuqing.com. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "HXMusicsViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    HXMusicsViewController *vc = [HXMusicsViewController new];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nav;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
