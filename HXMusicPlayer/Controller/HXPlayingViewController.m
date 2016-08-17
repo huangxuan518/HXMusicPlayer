@@ -14,6 +14,9 @@
 #import "HXMusicData.h"
 #import "UIImageView+WebCache.h"
 
+#import <MediaPlayer/MPNowPlayingInfoCenter.h>
+#import <MediaPlayer/MPMediaItem.h>
+
 @interface HXPlayingViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;//标题
@@ -25,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *playOrPauseMusicButton;//播放/暂停按钮
 @property (nonatomic,strong) NSTimer *timer;
 
+@property (nonatomic,strong) MPMediaItemArtwork *albumArt;
+
 @end
 
 @implementation HXPlayingViewController
@@ -34,6 +39,139 @@
     // Do any additional setup after loading the view from its nib.
     //刷新UI
     [self refreshUI];
+}
+
+- (void)changeTrackTitles
+{
+    Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
+    if (playingInfoCenter)
+    {
+        //获取播放数据
+        HXMusicModel *model = [HXMusicData playingMusic];
+        
+        UIImage *image = nil;
+        if([model.icon rangeOfString:@"http"].location != NSNotFound) {
+            image = [self getImageFromURL:model.icon];
+        } else {
+            image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",model.icon]];
+        }
+        
+        //获取播放器
+        id player = [HXAudioTool getAudioPlayer:model.fileName];
+        double progress;
+        double duration;
+        
+        if ([player isKindOfClass:[AudioStreamer class]]) {
+            //网络歌曲
+            AudioStreamer *audioStreamer = (AudioStreamer *)player;
+            progress = audioStreamer.progress;
+            duration = audioStreamer.duration;
+        } else if ([player isKindOfClass:[AVAudioPlayer class]]) {
+            //本地歌曲
+            AVAudioPlayer *audioPlayer = (AVAudioPlayer *)player;
+            progress = audioPlayer.currentTime;
+            duration = audioPlayer.duration;
+        }
+        
+        _albumArt = [[MPMediaItemArtwork alloc] initWithImage:image];
+        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+        [songInfo setObject:model.name forKey:MPMediaItemPropertyTitle];
+        [songInfo setObject:model.singer forKey:MPMediaItemPropertyAlbumTitle];
+        [songInfo setObject:model.singer forKey:MPMediaItemPropertyArtist];
+        [songInfo setObject:_albumArt forKey:MPMediaItemPropertyArtwork];
+        
+        [songInfo setObject:[NSNumber numberWithDouble:progress] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime]; //音乐当前已经播放时间
+        [songInfo setObject:[NSNumber numberWithDouble:duration] forKey:MPMediaItemPropertyPlaybackDuration];//歌曲总时间设置
+        
+//        //音乐当前播放时间 在计时器中修改
+//        [songInfo setObject:[NSNumber numberWithDouble:duration] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        
+        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+    }
+}
+
+//计时器修改进度
+- (void)changeProgress:(NSTimer *)sender{
+//    if(self.player){
+//        //当前播放时间
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo]];
+//        [dict setObject:[NSNumber numberWithDouble:self.player.currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime]; //音乐当前已经过时间
+//        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+//        
+//    }
+}
+
+- (UIImage *)getImageFromURL:(NSString *)fileURL {
+    
+    NSLog(@"执行图片下载函数");
+    
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+//received remote event
+-(void)remoteControlReceivedWithEvent:(UIEvent *)event{
+    //type==2  subtype==单击暂停键：103，双击暂停键104
+    if (event.type == UIEventTypeRemoteControl) {
+        switch (event.subtype) {
+                
+            case UIEventSubtypeRemoteControlPlay:{
+                NSLog(@"play---------");
+                [self playOrPauseMusicButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlPause:{
+                NSLog(@"Pause---------");
+                [self playOrPauseMusicButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlStop:{
+                NSLog(@"Stop---------");
+                [self stopButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlTogglePlayPause:{
+                //单击暂停键：103
+                NSLog(@"单击暂停键：103");
+                [self playOrPauseMusicButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlNextTrack:{
+                //双击暂停键：104
+                NSLog(@"双击暂停键：104");
+                [self nextMusicButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlPreviousTrack:{
+                NSLog(@"三击暂停键：105");
+                [self previousMusicButtonAction:nil];
+            }break;
+            case UIEventSubtypeRemoteControlBeginSeekingForward:{
+                NSLog(@"单击，再按下不放：108");
+            }break;
+            case UIEventSubtypeRemoteControlEndSeekingForward:{
+                NSLog(@"单击，再按下不放，松开时：109");
+            }break;
+            default:
+                break;
+        }
+    }
 }
 
 //刷新界面显示
@@ -69,14 +207,18 @@
     //销毁计时器
     [self setTimerValid];
     
+    [self stopButtonAction:sender];
+    
+    //返回前一个页面
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)stopButtonAction:(UIButton *)sender {
     //获取播放数据
     HXMusicModel *model = [HXMusicData playingMusic];
     
     //停止播放的歌曲
     [HXAudioTool stopMusic:model.fileName];
-    
-    //返回前一个页面
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //播放/暂停
@@ -115,11 +257,7 @@
 
 //上一首
 - (IBAction)previousMusicButtonAction:(UIButton *)sender {
-    //获取当前播放数据
-    HXMusicModel *model = [HXMusicData playingMusic];
-    
-    //停止之前的播放器
-    [HXAudioTool stopMusic:model.fileName];
+    [self stopButtonAction:sender];
     
     //设置数据为播放数据
     [HXMusicData setPlayingMusic:[HXMusicData previousMusic]];
@@ -130,11 +268,7 @@
 
 //下一首
 - (IBAction)nextMusicButtonAction:(UIButton *)sender {
-    //获取当前播放数据
-    HXMusicModel *model = [HXMusicData playingMusic];
-    
-    //停止之前的播放器
-    [HXAudioTool stopMusic:model.fileName];
+    [self stopButtonAction:sender];
     
     //设置数据为播放数据
     [HXMusicData setPlayingMusic:[HXMusicData nextMusic]];
@@ -228,6 +362,8 @@
 }
 
 - (NSString *)setCurrentTime:(NSTimeInterval)currentTime {
+    [self changeTrackTitles];
+    
     int minute = currentTime / 60;
     int second = (int)currentTime % 60;
     NSString *currentTimeStr = [NSString stringWithFormat:@"%02d:%02d", minute,second];

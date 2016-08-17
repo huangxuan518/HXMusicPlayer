@@ -21,6 +21,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
     HXMusicsViewController *vc = [HXMusicsViewController new];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;
