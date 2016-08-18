@@ -15,6 +15,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)changeNowPlayingInfo;
+- (void)changeProgress:(NSTimer *)sender;
 
 @end
 

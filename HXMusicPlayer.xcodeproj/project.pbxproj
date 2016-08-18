@@ -51,6 +51,7 @@
 		304EAE591CAB8077005563C8 /* 薛之谦 - 丑八怪.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 304EAE541CAB8077005563C8 /* 薛之谦 - 丑八怪.mp3 */; };
 		304EAE5A1CAB8077005563C8 /* 薛之谦 - 演员.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 304EAE551CAB8077005563C8 /* 薛之谦 - 演员.mp3 */; };
 		304EAE5B1CAB8077005563C8 /* marry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 304EAE561CAB8077005563C8 /* marry.mp3 */; };
+		E49D472B1D655882004FE1E6 /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = E49D472A1D655882004FE1E6 /* pic1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +136,7 @@
 		304EAE541CAB8077005563C8 /* 薛之谦 - 丑八怪.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "薛之谦 - 丑八怪.mp3"; sourceTree = "<group>"; };
 		304EAE551CAB8077005563C8 /* 薛之谦 - 演员.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "薛之谦 - 演员.mp3"; sourceTree = "<group>"; };
 		304EAE561CAB8077005563C8 /* marry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = marry.mp3; sourceTree = "<group>"; };
+		E49D472A1D655882004FE1E6 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				304EAE541CAB8077005563C8 /* 薛之谦 - 丑八怪.mp3 */,
 				304EAE551CAB8077005563C8 /* 薛之谦 - 演员.mp3 */,
 				304EAE561CAB8077005563C8 /* marry.mp3 */,
+				E49D472A1D655882004FE1E6 /* pic1.png */,
 				304EAE501CAB7FB2005563C8 /* xiaoguo.gif */,
 				303D0AAD1CAB684200B4EC9A /* Assets.xcassets */,
 				303D0AAE1CAB684200B4EC9A /* Info.plist */,
@@ -378,6 +381,7 @@
 				304EAE591CAB8077005563C8 /* 薛之谦 - 丑八怪.mp3 in Resources */,
 				303D0B011CAB687F00B4EC9A /* HXPlayingViewController.xib in Resources */,
 				303D0AAF1CAB684200B4EC9A /* Assets.xcassets in Resources */,
+				E49D472B1D655882004FE1E6 /* pic1.png in Resources */,
 				304EAE511CAB7FB2005563C8 /* xiaoguo.gif in Resources */,
 				304EAE571CAB8077005563C8 /* 李克勤 - 天梯.mp3 in Resources */,
 				304EAE5A1CAB8077005563C8 /* 薛之谦 - 演员.mp3 in Resources */,

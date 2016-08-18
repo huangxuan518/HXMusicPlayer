@@ -37,82 +37,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //设置后台播放
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     //刷新UI
     [self refreshUI];
 }
 
-- (void)changeTrackTitles
-{
-    Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
-    if (playingInfoCenter)
-    {
-        //获取播放数据
-        HXMusicModel *model = [HXMusicData playingMusic];
-        
-        UIImage *image = nil;
-        if([model.icon rangeOfString:@"http"].location != NSNotFound) {
-            image = [self getImageFromURL:model.icon];
-        } else {
-            image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",model.icon]];
-        }
-        
-        //获取播放器
-        id player = [HXAudioTool getAudioPlayer:model.fileName];
-        double progress;
-        double duration;
-        
-        if ([player isKindOfClass:[AudioStreamer class]]) {
-            //网络歌曲
-            AudioStreamer *audioStreamer = (AudioStreamer *)player;
-            progress = audioStreamer.progress;
-            duration = audioStreamer.duration;
-        } else if ([player isKindOfClass:[AVAudioPlayer class]]) {
-            //本地歌曲
-            AVAudioPlayer *audioPlayer = (AVAudioPlayer *)player;
-            progress = audioPlayer.currentTime;
-            duration = audioPlayer.duration;
-        }
-        
-        _albumArt = [[MPMediaItemArtwork alloc] initWithImage:image];
-        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-        [songInfo setObject:model.name forKey:MPMediaItemPropertyTitle];
-        [songInfo setObject:model.singer forKey:MPMediaItemPropertyAlbumTitle];
-        [songInfo setObject:model.singer forKey:MPMediaItemPropertyArtist];
-        [songInfo setObject:_albumArt forKey:MPMediaItemPropertyArtwork];
-        
-        [songInfo setObject:[NSNumber numberWithDouble:progress] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime]; //音乐当前已经播放时间
-        [songInfo setObject:[NSNumber numberWithDouble:duration] forKey:MPMediaItemPropertyPlaybackDuration];//歌曲总时间设置
-        
-//        //音乐当前播放时间 在计时器中修改
-//        [songInfo setObject:[NSNumber numberWithDouble:duration] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-        
-        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
-    }
-}
-
-//计时器修改进度
-- (void)changeProgress:(NSTimer *)sender{
-//    if(self.player){
-//        //当前播放时间
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[[MPNowPlayingInfoCenter defaultCenter] nowPlayingInfo]];
-//        [dict setObject:[NSNumber numberWithDouble:self.player.currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime]; //音乐当前已经过时间
-//        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
-//        
-//    }
-}
-
-- (UIImage *)getImageFromURL:(NSString *)fileURL {
-    
-    NSLog(@"执行图片下载函数");
-    
-    UIImage * result;
-    
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    
-    result = [UIImage imageWithData:data];
-    
-    return result;
-}
+#pragma mark - 耳机控制
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -176,20 +111,24 @@
 
 //刷新界面显示
 - (void)refreshUI {
+    //后台运行才需要更新
+    AppDelegate *dele = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [dele changeNowPlayingInfo];
     
+    //前台运行
     //获取播放数据
     HXMusicModel *model = [HXMusicData playingMusic];
-
+    
     _nameLabel.text = model.name;
     _singerLabel.text = model.singer;
-
+    
     
     if([model.icon rangeOfString:@"http"].location != NSNotFound) {
         [_iconImageView sd_setImageWithURL:[NSURL URLWithString:model.icon] completed:nil];
     } else {
         _iconImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",model.icon]];
     }
-
+    
     [_playOrPauseMusicButton setBackgroundImage:[UIImage imageNamed:@"player_btn_pause_normal"] forState:UIControlStateNormal];
     [_playOrPauseMusicButton setBackgroundImage:[UIImage imageNamed:@"player_btn_pause_highlight"] forState:UIControlStateHighlighted];
     
@@ -198,6 +137,7 @@
     
     //开始计时器
     [self start];
+
 }
 
 #pragma mark - 播放器操作
@@ -329,6 +269,11 @@
 
 - (void)updateProgress:(NSTimer *)updatedTimer {
     
+    //后台运行才需要更新
+    AppDelegate *dele = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [dele changeProgress:updatedTimer];
+
+    //前台运行
     //获取播放数据
     HXMusicModel *model = [HXMusicData playingMusic];
     
@@ -362,8 +307,6 @@
 }
 
 - (NSString *)setCurrentTime:(NSTimeInterval)currentTime {
-    [self changeTrackTitles];
-    
     int minute = currentTime / 60;
     int second = (int)currentTime % 60;
     NSString *currentTimeStr = [NSString stringWithFormat:@"%02d:%02d", minute,second];
