@@ -4,3 +4,7 @@
 
 # 效果预览
 ![image](https://github.com/huangxuan518/HXMusicPlayer/blob/master/HXMusicPlayer/xiaoguo.gif)
+
+# Info.plost
+
+![image](https://github.com/huangxuan518/HXMusicPlayer/blob/master/HXMusicPlayer/pic1.png)
