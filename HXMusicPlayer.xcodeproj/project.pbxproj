@@ -137,6 +137,7 @@
 		304EAE551CAB8077005563C8 /* 薛之谦 - 演员.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "薛之谦 - 演员.mp3"; sourceTree = "<group>"; };
 		304EAE561CAB8077005563C8 /* marry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = marry.mp3; sourceTree = "<group>"; };
 		E49D472A1D655882004FE1E6 /* pic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic1.png; sourceTree = "<group>"; };
+		E49D472C1D6558D3004FE1E6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +154,7 @@
 		303D0A8A1CAB67C200B4EC9A = {
 			isa = PBXGroup;
 			children = (
+				E49D472C1D6558D3004FE1E6 /* README.md */,
 				303D0A951CAB67C200B4EC9A /* HXMusicPlayer */,
 				303D0A941CAB67C200B4EC9A /* Products */,
 			);
